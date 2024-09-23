@@ -16,17 +16,17 @@ class Game {
         this.createdAt = createdAt || new Date();
     }
 
-    static fromJSON(json: any): Game {
+    static fromJSON(json: Game): Game {
         return new Game(
-            json.guesses.map((guess: any) => Guess.fromJSON(guess)),
+            json.guesses.map((guess: Guess) => Guess.fromJSON(guess)),
             json.word,
-            json.hints.map((hint: any) => Hint.fromJSON(hint)),
+            json.hints.map((hint: Hint) => Hint.fromJSON(hint)),
             json.id,
             new Date(json.createdAt)
         );
     }
 
-    toJSON(): any {
+    toJSON(): {guesses: Guess[], word: string, hints: Hint[], id: string, createdAt: string} {
         return {
             guesses: this.guesses.map((guess) => guess.toJSON()),
             word: this.word,

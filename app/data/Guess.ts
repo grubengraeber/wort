@@ -9,7 +9,7 @@ class Guess {
         this.amountOfCorrectLetters = amountOfCorrectLetters;
     }
 
-    static fromJSON(json: any): Guess {
+    static fromJSON(json: Guess): Guess {
         return new Guess(
             json.id,
             json.text,
@@ -17,7 +17,7 @@ class Guess {
         );
     }
 
-    toJSON(): any {
+    toJSON(): {id: string, text: string, amountOfCorrectLetters: number} {
         return {
             id: this.id,
             text: this.text,

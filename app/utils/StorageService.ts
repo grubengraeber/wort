@@ -7,7 +7,7 @@ class StorageService {
 
     getGames(): Game[] {
         const response = localStorage.getItem(this.gamesTableName);
-        return response ? JSON.parse(response).map((game: any) => Game.fromJSON(game)) : [];
+        return response ? JSON.parse(response).map((game: Game) => Game.fromJSON(game)) : [];
     }
 
     saveGames(games: Game[]) {
