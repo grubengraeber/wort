@@ -11,7 +11,7 @@ class Hint {
         this.mustInclude = mustInclude;
     }
 
-    static fromJSON(json: Hint): Hint {
+    static fromJSON(json: {id: string, position: number, letters: string[], mustInclude: boolean}): Hint {
         return new Hint(
             json.id,
             json.position,

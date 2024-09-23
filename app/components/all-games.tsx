@@ -10,7 +10,7 @@ function AllGames({allGames}: {allGames: Game[]}) {
                 allGames.map((game) => {
                     return (
                         <div className='w-full' key={game.id}>
-                            <GameCard game={game} />
+                            <GameCard game={game} games={allGames} />
                         </div>
                     )
                 })

@@ -22,11 +22,13 @@ function LetsPlay({params}: {params: {id: string}}) {
 
   useEffect(() => {
     let tempraryStorageService: StorageService | undefined;
+    let temporaryGuessService: GuessService | undefined;
     if (window) {
       const newStorageService = new StorageService();
       tempraryStorageService = newStorageService;
       setStorageService(newStorageService);
-      setGuessService(new GuessService(newStorageService));
+      temporaryGuessService = new GuessService(newStorageService);
+      setGuessService(temporaryGuessService);
     }
     else {
       router.push('/');
@@ -41,25 +43,23 @@ function LetsPlay({params}: {params: {id: string}}) {
 
     tempraryStorageService.addCurrentGame(currentGame);
     setGame(currentGame);
-    getGuesses();
+    getGuesses(temporaryGuessService);
   }, []);
 
-  const getGuesses = () => {
-    if (game) {
-      const guesses = guessService?.getGuesses(game.id);
+  const getGuesses = (guessService: GuessService) => {
+      const guesses = guessService?.getGuesses(params.id);
       setGuesses(guesses ?? []);
-    }
   }
   
 
   return (
-    <div>
-    <div className='h-[100vh]'>
+    <div className='p-10 space-y-5'>
+    <div className='min-h-[100vh]'>
       <Button onClick={() => router.push('/')}>Back to menu</Button>
     {
       game ?    
-      (<div className="text-center">
-        <h1 className="text-8xl">Let&apos;s Play</h1>
+      (<div className="text-center gap-10">
+        <h1 className="text-6xl">Let&apos;s Play</h1>
         <NewWord word={word} setWord={setWord} guesses={guesses} game={game} />
         <GuessTable guesses={guesses} setGuesses={setGuesses} currentGame={game} />
       </div>)

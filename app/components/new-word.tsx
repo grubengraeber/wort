@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
 import Guess from '../data/Guess';
 import { uuid } from 'uuidv4';
@@ -12,7 +12,12 @@ import SuggestionService from '../utils/SuggestionService';
 function NewWord({word, setWord, guesses, game}: {word: string, setWord: (newWord: string) => void, guesses: Guess[], game: Game}) {
     const storageService = new StorageService();
     const guessService = new GuessService(storageService);
-    const suggestionService = new SuggestionService();
+
+    const [suggestionService, setSuggestionService] = useState<SuggestionService>(new SuggestionService());
+
+    useEffect(() => {
+      setSuggestionService(new SuggestionService());
+    }, [word]);
 
     const handleReset = () => {
         setWord("");
@@ -34,22 +39,23 @@ function NewWord({word, setWord, guesses, game}: {word: string, setWord: (newWor
         const newGuess = new Guess(newUUID, word, 0);
         guessService.addGuess(game.id, newGuess);
         guesses.push(newGuess);
+        setSuggestionService(new SuggestionService());
         handleReset();
-    };
+      };
 
-    const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    if (newValue.length > 4) {
-        toast.error("Please enter a word containing 4 letters");
-        return;
-    }
+      const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = event.target.value;
+      if (newValue.length > 4) {
+          toast.error("Please enter a word containing 4 letters");
+          return;
+      }
 
-    setWord(newValue);
+      setWord(newValue);
     };
 
     const suggest = () => {
-        const suggestion = suggestionService.getWordSuggestion(game);
-        setWord(suggestion);
+      const suggestion = suggestionService.getWordSuggestion(game);
+      setWord(suggestion);
     };
 
 

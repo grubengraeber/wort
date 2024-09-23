@@ -18,9 +18,9 @@ class Game {
 
     static fromJSON(json: Game): Game {
         return new Game(
-            json.guesses.map((guess: Guess) => Guess.fromJSON(guess)),
+            json.guesses.map((guess: {id: string, text: string, amountOfCorrectLetters: number}) => Guess.fromJSON(guess)),
             json.word,
-            json.hints.map((hint: Hint) => Hint.fromJSON(hint)),
+            json.hints.map((hint: {id: string, position: number, letters: string[], mustInclude: boolean}) => Hint.fromJSON(hint)),
             json.id,
             new Date(json.createdAt)
         );
