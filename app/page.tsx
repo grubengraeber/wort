@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StorageService from "./utils/StorageService";
 import Game from "./data/Game";
 import { Button } from "@/components/ui/button";
@@ -12,16 +12,24 @@ export default function Home() {
 
   const router = useRouter();
 
-  const storageService = new StorageService();
-  const [allGames, setAllGames] = useState<Game[]>(storageService.getGames());
+  const [storageService, setStorageService] = useState<StorageService>();
+  const [allGames, setAllGames] = useState<Game[]>(storageService?.getGames() ?? []);
+
+  useEffect(() => {
+    if (window) {
+      const newStorageService = new StorageService();
+      setStorageService(newStorageService);
+      setAllGames(newStorageService.getGames());
+    }
+  }, []);
   
 
   return (
     <div className="text-center">
       {
-        storageService.getCurrentGame() ?
+        storageService?.getCurrentGame() ?
         <Button onClick={() => {
-          router.push(`/${storageService.getCurrentGame()?.id}`);
+          router.push(`/${storageService?.getCurrentGame()?.id}`);
         }}>Go to current game</Button>
         :
         null

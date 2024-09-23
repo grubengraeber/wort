@@ -14,29 +14,39 @@ function LetsPlay({params}: {params: {id: string}}) {
 
   const router = useRouter();
 
-  const storageService = new StorageService();
-  const guessService = new GuessService(storageService);
-
+  const [storageService, setStorageService] = useState<StorageService>();
+  const [guessService, setGuessService] = useState<GuessService>();
   const [word, setWord] = useState<string>("");
-  const [game, setGame] = useState<Game | undefined>(storageService.getGameById(params.id));
+  const [game, setGame] = useState<Game | undefined>(storageService?.getGameById(params.id));
   const [guesses, setGuesses] = useState<Guess[]>([]);
 
   useEffect(() => {
-    const currentGame = storageService.getGameById(params.id);
+    if (window) {
+      const newStorageService = new StorageService();
+      setStorageService(newStorageService);
+      setGuessService(new GuessService(newStorageService));
+      
+    }
+    else {
+      router.push('/');
+      return
+    }
+
+    const currentGame = storageService!.getGameById(params.id);
     if (!currentGame) {
       router.push('/');
       return
     }
 
-    storageService.addCurrentGame(currentGame);
+    storageService!.addCurrentGame(currentGame);
     setGame(currentGame);
     getGuesses();
-  }, [params.id, router, storageService, setGame]);
+  }, []);
 
   const getGuesses = () => {
     if (game) {
-      const guesses = guessService.getGuesses(game.id);
-      setGuesses(guesses);
+      const guesses = guessService?.getGuesses(game.id);
+      setGuesses(guesses ?? []);
     }
   }
   
