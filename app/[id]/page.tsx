@@ -31,7 +31,7 @@ function LetsPlay({params}: {params: {id: string}}) {
     storageService.addCurrentGame(currentGame);
     setGame(currentGame);
     getGuesses();
-  }, []);
+  }, [params.id, router, storageService, setGame]);
 
   const getGuesses = () => {
     if (game) {
