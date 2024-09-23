@@ -21,7 +21,7 @@ function GuessTable({ guesses, setGuesses, currentGame }: {guesses: {id: string,
 
     const handleDelete = (id: string) => {
         guessService.deleteGuess(currentGame.id, id);
-        const newGuesses = guesses.filter((guess) => guess.id !== id);
+        const newGuesses = guesses.map((guess) => Guess.fromJSON(guess)).filter((guess) => guess.id !== id);
         setGuesses(newGuesses);
     }
 
@@ -33,8 +33,8 @@ function GuessTable({ guesses, setGuesses, currentGame }: {guesses: {id: string,
         const guess = guesses.find((guess) => guess.id === id);
         if (guess) {
           guess.amountOfCorrectLetters = parseInt(newValue);
-          guessService.updateGuess(currentGame.id, guess);
-          setGuesses([...guesses]);
+          guessService.updateGuess(currentGame.id, Guess.fromJSON(guess));
+          setGuesses([...guesses.map((guess) => Guess.fromJSON(guess))]);
         }
       };
 

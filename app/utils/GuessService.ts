@@ -11,7 +11,7 @@ class GuessService {
 
     getGuesses(gameId: string): Guess[] {
         const game = this.storageService.getGameById(gameId);
-        return game ? game.guesses : [];
+        return game ? game.guesses.map((guess) => Guess.fromJSON(guess)) : [];
     }
 
     addGuess(gameId: string, guess: Guess): boolean {
@@ -29,7 +29,7 @@ class GuessService {
         if (!game) {
             return false
         }
-        const index = game.guesses.findIndex((g: Guess) => g.id === guess.id);
+        const index = game.guesses.map((guess) => Guess.fromJSON(guess)).findIndex((g: Guess) => g.id === guess.id);
         game.guesses[index] = guess;
         this.storageService.updateGame(game);
         return true;
@@ -40,8 +40,8 @@ class GuessService {
         if (!game) {
             return false
         }
-        const index = game.guesses.findIndex((g: Guess) => g.id === guessId);
-        game.guesses.splice(index, 1);
+        const index = game.guesses.map((guess) => Guess.fromJSON(guess)).findIndex((g: Guess) => g.id === guessId);
+        game.guesses.map((guess) => Guess.fromJSON(guess)).splice(index, 1);
         this.storageService.updateGame(game);
         return true;
     }

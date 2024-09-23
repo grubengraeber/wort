@@ -48,18 +48,18 @@ function LetsPlay({params}: {params: {id: string}}) {
     {
       game ?    
       (<div className="text-center">
-        <h1 className="text-8xl">Let's Play</h1>
+        <h1 className="text-8xl">Let&apos;s Play</h1>
         <NewWord word={word} setWord={setWord} guesses={guesses} game={game} />
         <GuessTable guesses={guesses} setGuesses={setGuesses} currentGame={game} />
       </div>)
       : 
       (<div className="text-center">
-        <h1 className="text-8xl">Let's Play</h1>
+        <h1 className="text-8xl">Let&apos;s Play</h1>
         <p>Game not found</p>
       </div>)
   }
   </div>
-  <h4>Your word is: "{ game?.word}"</h4>
+  <h4>Your word is: &quot;{ game?.word}&quot;</h4>
   </div>
   )
 }
