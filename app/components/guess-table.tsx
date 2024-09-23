@@ -21,7 +21,7 @@ function GuessTable({ guesses, setGuesses, currentGame }: {guesses: {id: string,
 
     const handleDelete = (id: string) => {
         guessService.deleteGuess(currentGame.id, id);
-        const newGuesses = guesses.map((guess) => Guess.fromJSON(guess)).filter((guess) => guess.id !== id);
+        const newGuesses = guesses.map((guess: {id: string, text: string, amountOfCorrectLetters: number}) => Guess.fromJSON(guess)).filter((guess) => guess.id !== id);
         setGuesses(newGuesses);
     }
 

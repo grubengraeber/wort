@@ -26,7 +26,7 @@ class Game {
         );
     }
 
-    toJSON(): {guesses: Guess[], word: string, hints: Hint[], id: string, createdAt: string} {
+    toJSON(): {guesses: {id: string, text: string, amountOfCorrectLetters: number}[], word: string, hints: {id: string, position: number, letters: string[], mustInclude: boolean}[], id: string, createdAt: string} {
         return {
             guesses: this.guesses.map((guess) => guess.toJSON()),
             word: this.word,

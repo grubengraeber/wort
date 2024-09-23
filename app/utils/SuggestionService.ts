@@ -8,6 +8,7 @@ class SuggestionService {
     }
 
     getWordSuggestion(game: Game): string {
+        console.log(game);
         return "Test";
     }
 }
