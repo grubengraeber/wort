@@ -34,7 +34,6 @@ function LetsPlay({params}: {params: {id: string}}) {
     }
 
     const currentGame = tempraryStorageService.getGameById(params.id);
-    console.log(currentGame);
     if (!currentGame) {
       router.push('/');
       return
