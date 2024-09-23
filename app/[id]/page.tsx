@@ -21,24 +21,26 @@ function LetsPlay({params}: {params: {id: string}}) {
   const [guesses, setGuesses] = useState<Guess[]>([]);
 
   useEffect(() => {
+    let tempraryStorageService: StorageService | undefined;
     if (window) {
       const newStorageService = new StorageService();
+      tempraryStorageService = newStorageService;
       setStorageService(newStorageService);
       setGuessService(new GuessService(newStorageService));
-      
     }
     else {
       router.push('/');
       return
     }
 
-    const currentGame = storageService!.getGameById(params.id);
+    const currentGame = tempraryStorageService.getGameById(params.id);
+    console.log(currentGame);
     if (!currentGame) {
       router.push('/');
       return
     }
 
-    storageService!.addCurrentGame(currentGame);
+    tempraryStorageService.addCurrentGame(currentGame);
     setGame(currentGame);
     getGuesses();
   }, []);
