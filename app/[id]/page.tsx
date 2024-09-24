@@ -5,10 +5,11 @@ import StorageService from '../utils/StorageService';
 import GuessService from '../utils/GuessService';
 import Game from '../data/Game';
 import Guess from '../data/Guess';
-import NewWord from '../components/new-word';
-import GuessTable from '../components/guess-table';
+import NewWord from '../components/guesses/new-word';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import AllHints from '../components/hints/all-hints';
+import GuessTable from '../components/guesses/guess-table';
 
 function LetsPlay({params}: {params: {id: string}}) {
 
@@ -61,6 +62,7 @@ function LetsPlay({params}: {params: {id: string}}) {
       (<div className="text-center gap-10">
         <h1 className="text-6xl">Let&apos;s Play</h1>
         <NewWord word={word} setWord={setWord} guesses={guesses} game={game} />
+        {/* <AllHints game={game} /> */}
         <GuessTable guesses={guesses} setGuesses={setGuesses} currentGame={game} />
       </div>)
       : 

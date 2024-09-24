@@ -1,16 +1,21 @@
+import Game from '@/app/data/Game';
+import Guess from '@/app/data/Guess';
+import Hint from '@/app/data/Hint';
+import GuessService from '@/app/utils/GuessService';
+import HintService from '@/app/utils/HintService';
+import StorageService from '@/app/utils/StorageService';
 import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import React from 'react'
-import Guess from '../data/Guess';
 import { toast } from 'sonner';
-import GuessService from '../utils/GuessService';
-import Game from '../data/Game';
-import StorageService from '../utils/StorageService';
+import { uuid } from 'uuidv4';
+
 
 function GuessTable({ guesses, setGuesses, currentGame }: {guesses: {id: string, text: string, amountOfCorrectLetters: number}[], setGuesses: (newGuesses: Guess[]) => void, currentGame: Game}) {
 
     const storageService = new StorageService();
     const guessService = new GuessService(storageService);
+    const hintService = new HintService(storageService);
 
     const handleAskDelete = (id: string) => {
         const response = confirm("Are you sure you want to delete this guess?");
@@ -35,6 +40,16 @@ function GuessTable({ guesses, setGuesses, currentGame }: {guesses: {id: string,
           guess.amountOfCorrectLetters = parseInt(newValue);
           guessService.updateGuess(currentGame.id, Guess.fromJSON(guess));
           setGuesses([...guesses.map((guess) => Guess.fromJSON(guess))]);
+          if (newValue === "0") {
+            
+            const hints = [
+              new Hint(uuid(), parseInt(newValue), [guess.text[0]], false),
+              new Hint(uuid(), parseInt(newValue), [guess.text[1]], false),
+              new Hint(uuid(), parseInt(newValue), [guess.text[2]], false),
+              new Hint(uuid(), parseInt(newValue), [guess.text[3]], false),
+            ];
+          hints.forEach((hint) => hintService.addHint(currentGame.id, hint));
+          }
         }
       };
 

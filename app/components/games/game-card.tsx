@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import Game from '../data/Game'
+import Game from '../../data/Game'
 import { Card, CardDescription, CardHeader } from '@/components/ui/card'
 import { useRouter } from 'next/navigation';
-import StorageService from '../utils/StorageService';
+import StorageService from '../../utils/StorageService';
 
 function GameCard({ game, games }: { game: Game, games: Game[] }) {
   const [storageService, setStorageService] = useState<StorageService>();

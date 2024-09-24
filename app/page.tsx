@@ -5,8 +5,8 @@ import StorageService from "./utils/StorageService";
 import Game from "./data/Game";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import NewGameForm from "./components/new-game-form";
-import AllGames from "./components/all-games";
+import NewGameForm from "./components/games/new-game-form";
+import AllGames from "./components/games/all-games";
 
 export default function Home() {
 

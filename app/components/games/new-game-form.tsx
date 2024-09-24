@@ -1,13 +1,13 @@
 import { Button } from '@/components/ui/button'
 import React, { useState } from 'react'
-import StorageService from '../utils/StorageService';
+import StorageService from '../../utils/StorageService';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import Game from '../data/Game';
+import Game from '../../data/Game';
 import { uuid } from 'uuidv4';
 import { toast } from 'sonner';
-import SuggestionService from '../utils/SuggestionService';
+import SuggestionService from '../../utils/SuggestionService';
 
 function NewGameForm() {
 

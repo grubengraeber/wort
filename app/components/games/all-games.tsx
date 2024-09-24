@@ -1,5 +1,5 @@
 import React from 'react'
-import Game from '../data/Game';
+import Game from '../../data/Game';
 import GameCard from './game-card';
 
 function AllGames({allGames}: {allGames: Game[]}) {
