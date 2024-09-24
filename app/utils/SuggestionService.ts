@@ -4,7 +4,7 @@ type LetterPosition = { letter: string, position: number };
 
 class SuggestionService {
     getAllWords(notPossibleLetters: LetterPosition[]): string[] {
-        var woerter = require("all-the-german-words")
+        const woerter = require("all-the-german-words")
         const goodWords = woerter.map((word: string) => word.toLowerCase()).filter((word: string) => {
             return word.length === 4 &&
                 word.match(/^[a-zA-Z]+$/) &&
@@ -31,9 +31,9 @@ class SuggestionService {
     getNotPossibleLetters(game: Game): LetterPosition[] {
         const notPossibleLetters: { letter: string, position: number }[] = [];
         const guesses = game.guesses;
-        for (let guess of guesses) {
+        for (const guess of guesses) {
             if (guess.amountOfCorrectLetters === 0) {
-                for (let letter of guess.text) {
+                for (const letter of guess.text) {
                     notPossibleLetters.push({ letter: letter.toLowerCase(), position: guess.text.indexOf(letter) });
                 }
             }
